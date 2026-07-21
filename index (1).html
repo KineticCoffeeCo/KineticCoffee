@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinetic Coffee Company — Veteran-Owned Small-Batch Coffee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --banner-h: 42px;
+    --black: #14100D;
+    --black-2: #1E1712;
+    --black-3: #2A2019;
+    --red: #E63A2E;
+    --red-bright: #FF5140;
+    --orange: #EF7A35;
+    --orange-bright: #FF9450;
+    --mint: #3FE8A3;
+    --mint-dim: #2CB983;
+    --paper: #F5EFE1;
+    --paper-dim: #C2B9A6;
+    --hairline: rgba(245,239,225,0.14);
+    --display: 'Permanent Marker', cursive;
+    --heading: 'Baloo 2', sans-serif;
+    --body: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    background:var(--black);
+    color:var(--paper);
+    font-family:var(--body);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+
+  a{ color:inherit; }
+  img,svg{ display:block; max-width:100%; }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--mint);
+  }
+
+  h1,h2,h3{
+    font-family:var(--heading);
+    text-transform:uppercase;
+    letter-spacing:0.005em;
+    line-height:1.02;
+    font-weight:800;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:0.6rem;
+    font-family:var(--mono);
+    font-size:0.82rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:0.95rem 1.6rem;
+    border-radius:4px;
+    border:1px solid transparent;
+    cursor:pointer;
+    text-decoration:none;
+    transition:transform 0.15s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .btn:focus-visible{ outline:2px solid var(--mint); outline-offset:3px; }
+  .btn-primary{ background:var(--red); color:var(--paper); }
+  .btn-primary:hover{ background:var(--red-bright); transform:translateY(-1px); }
+  .btn-ghost{ background:transparent; color:var(--paper); border-color:var(--hairline); }
+  .btn-ghost:hover{ border-color:var(--mint); color:var(--mint); }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 1.75rem; }
+
+  /* ---------- CONSTRUCTION BANNER ---------- */
+  .construction-banner{
+    position:fixed; top:0; left:0; right:0; z-index:110; height:var(--banner-h);
+    display:flex; align-items:center; justify-content:center; gap:0.6rem;
+    background:var(--red); color:var(--paper);
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.05em; text-transform:uppercase;
+    padding:0 1rem; text-align:center;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed; top:var(--banner-h); left:0; right:0; z-index:100;
+    padding:1.1rem 0;
+    background:linear-gradient(to bottom, rgba(20,16,13,0.95), rgba(20,16,13,0));
+    transition:background 0.3s ease, border-color 0.3s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.solid{ background:rgba(20,16,13,0.96); border-bottom-color:var(--hairline); backdrop-filter:blur(6px); }
+  header .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .logo{ display:flex; align-items:center; gap:0.55rem; text-decoration:none; }
+  .logo-mark{ width:30px; height:30px; flex-shrink:0; }
+  .logo-text{ font-family:var(--heading); font-weight:800; font-size:1.1rem; letter-spacing:0.01em; color:var(--red); text-transform:uppercase; }
+  .logo-text span{ color:var(--orange); }
+  nav.main-nav{ display:flex; align-items:center; gap:2rem; }
+  nav.main-nav a{
+    font-family:var(--mono); font-size:0.78rem; letter-spacing:0.06em; text-transform:uppercase;
+    text-decoration:none; color:var(--paper-dim); transition:color 0.2s ease; position:relative;
+  }
+  nav.main-nav a:hover, nav.main-nav a:focus-visible{ color:var(--paper); }
+  .nav-toggle{ display:none; background:none; border:1px solid var(--hairline); color:var(--paper); width:42px; height:38px; border-radius:4px; cursor:pointer; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:calc(7rem + var(--banner-h)) 0 4rem;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 82% 12%, rgba(63,232,163,0.10), transparent 55%),
+      radial-gradient(ellipse at 8% 92%, rgba(230,58,46,0.14), transparent 50%),
+      var(--black);
+  }
+  .hero-noise{
+    position:absolute; inset:0; opacity:0.5; pointer-events:none;
+    background-image:radial-gradient(rgba(245,239,225,0.55) 0.6px, transparent 0.6px);
+    background-size:5px 5px;
+    mask-image:radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.5), transparent 70%);
+  }
+  .trajectory-svg{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  .trajectory-path{
+    fill:none; stroke:var(--mint); stroke-width:2; stroke-linecap:round;
+    stroke-dasharray:1400; stroke-dashoffset:1400;
+    animation:draw 2.4s cubic-bezier(.3,.9,.3,1) 0.3s forwards;
+  }
+  .trajectory-path.dim{ stroke:var(--red); opacity:0.45; stroke-width:1.4; animation-delay:0.1s; }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+
+  .hero-content{ position:relative; z-index:2; max-width:760px; }
+  .hero .eyebrow{ margin-bottom:1.4rem; display:flex; align-items:center; gap:0.6rem; }
+  .hero .eyebrow::before{ content:''; width:26px; height:1px; background:var(--mint); }
+  .hero h1{ font-family:var(--display); text-transform:none; font-size:clamp(2.6rem, 6.4vw, 4.6rem); color:var(--paper); letter-spacing:0.01em; }
+  .hero h1 em{ font-style:normal; color:var(--red-bright); }
+  .hero-sub{
+    margin-top:1.8rem; max-width:520px; color:var(--paper-dim); font-size:1.06rem;
+  }
+  .hero-actions{ display:flex; gap:1rem; margin-top:2.4rem; flex-wrap:wrap; }
+
+  /* ---------- BADGE (signature element) ---------- */
+  .hero-badge{
+    position:absolute; right:6%; bottom:8%; width:180px; height:180px; z-index:2;
+    display:none;
+  }
+  .badge-spin{ animation:spin 40s linear infinite; transform-origin:50% 50%; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce){ .badge-spin{ animation:none; } }
+
+  /* ---------- MISSION STRIP ---------- */
+  .strip{
+    border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);
+    background:var(--black-2);
+    padding:1.1rem 0;
+    overflow:hidden;
+  }
+  .strip-track{
+    display:flex; gap:3rem; white-space:nowrap; width:max-content;
+    animation:scroll-strip 28s linear infinite;
+    font-family:var(--mono); font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--paper-dim);
+  }
+  .strip-track span{ display:flex; align-items:center; gap:0.8rem; }
+  .strip-track span::after{ content:'•'; color:var(--orange); }
+  @keyframes scroll-strip{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:6.5rem 0; position:relative; }
+  .section-head{ max-width:640px; margin-bottom:3.2rem; }
+  .section-head h2{ font-size:clamp(2rem, 4.2vw, 3.1rem); color:var(--paper); margin-top:0.7rem; }
+
+  /* ---------- STORY ---------- */
+  .story{ background:var(--black); }
+  .story-grid{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:4rem; align-items:center; }
+  .story-art{ position:relative; aspect-ratio:4/5; border:1px solid var(--hairline); border-radius:6px; background:var(--black-2); overflow:hidden; }
+  .story-art svg{ width:100%; height:100%; }
+  .story-copy p{ color:var(--paper-dim); margin-top:1.1rem; font-size:1.02rem; }
+  .story-copy p:first-of-type{ margin-top:0; }
+  .pull-quote{
+    margin-top:2rem; padding-left:1.4rem; border-left:3px solid var(--red);
+    font-family:var(--display); font-size:1.4rem; text-transform:none; letter-spacing:0.005em;
+    color:var(--paper); line-height:1.35;
+  }
+  .pull-quote cite{ display:block; font-family:var(--mono); font-style:normal; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--mint); margin-top:0.8rem; }
+
+  /* ---------- ROASTER ---------- */
+  .roaster{ background:var(--black-2); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); }
+  .roaster-grid{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:4rem; align-items:start; }
+  .roaster-copy p{ color:var(--paper-dim); margin-top:1.1rem; font-size:1.02rem; }
+  .roaster-copy p:first-of-type{ margin-top:0; }
+  .roaster-facts{ display:flex; flex-direction:column; gap:1rem; }
+  .fact-card{ background:var(--black); border:1px solid var(--hairline); border-radius:8px; padding:1.4rem; }
+  .fact-card .step-no{ font-family:var(--mono); font-size:0.72rem; color:var(--mint); letter-spacing:0.08em; }
+  .fact-card p{ color:var(--paper-dim); font-size:0.9rem; margin-top:0.6rem; }
+
+  /* ---------- PROCESS ---------- */
+  .process{ background:var(--black-2); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); }
+  .process-line{ position:relative; margin-top:3rem; }
+  .process-line svg.rail{ position:absolute; top:26px; left:0; width:100%; height:6px; z-index:0; }
+  .rail-path{ stroke:var(--hairline); stroke-width:2; fill:none; }
+  .rail-fill{ stroke:var(--mint); stroke-width:2; fill:none; stroke-dasharray:1000; stroke-dashoffset:1000; transition:stroke-dashoffset 1.6s cubic-bezier(.3,.9,.3,1); }
+  .process-line.in-view .rail-fill{ stroke-dashoffset:0; }
+  .waypoints{ position:relative; z-index:1; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
+  .waypoint{ opacity:0; transform:translateY(14px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .process-line.in-view .waypoint{ opacity:1; transform:translateY(0); }
+  .waypoint:nth-child(2){ transition-delay:0.15s; }
+  .waypoint:nth-child(3){ transition-delay:0.3s; }
+  .waypoint:nth-child(4){ transition-delay:0.45s; }
+  .waypoint-dot{ width:14px; height:14px; border-radius:50%; background:var(--black-2); border:2px solid var(--mint); margin-bottom:1.1rem; }
+  .waypoint .step-no{ font-family:var(--mono); font-size:0.72rem; color:var(--mint); letter-spacing:0.1em; }
+  .waypoint h3{ font-size:1.15rem; margin-top:0.4rem; color:var(--paper); }
+  .waypoint p{ color:var(--paper-dim); font-size:0.92rem; margin-top:0.6rem; }
+
+  /* ---------- PRODUCTS ---------- */
+  .products{ background:var(--black); }
+  .product-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:1.5rem; }
+  .product-card{
+    background:var(--black-2); border:1px solid var(--hairline); border-radius:8px;
+    padding:1.6rem; display:flex; flex-direction:column; transition:border-color 0.25s ease, transform 0.25s ease;
+  }
+  .product-card:hover{ border-color:var(--orange); transform:translateY(-3px); }
+  .bag-art{ aspect-ratio:1/1; margin-bottom:1.3rem; }
+  .product-card h3{ font-size:1.2rem; color:var(--paper); }
+  .roast-tag{ font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--mint); margin-top:0.4rem; }
+  .notes{ color:var(--paper-dim); font-size:0.88rem; margin-top:0.7rem; flex-grow:1; }
+  .gauge{ margin-top:1.1rem; }
+  .gauge-label{ display:flex; justify-content:space-between; font-family:var(--mono); font-size:0.66rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); margin-bottom:0.35rem; }
+  .gauge-bar{ height:5px; background:var(--black-3); border-radius:3px; overflow:hidden; }
+  .gauge-fill{ height:100%; background:linear-gradient(90deg, var(--orange), var(--red)); border-radius:3px; }
+  .price-row{ display:flex; justify-content:space-between; align-items:center; margin-top:1.3rem; padding-top:1.1rem; border-top:1px solid var(--hairline); }
+  .price{ font-family:var(--mono); font-size:1rem; color:var(--paper); }
+  .add-btn{ font-family:var(--mono); font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase; background:transparent; border:1px solid var(--hairline); color:var(--paper); padding:0.5rem 0.85rem; border-radius:4px; cursor:pointer; transition:all 0.2s ease; }
+  .add-btn:hover{ border-color:var(--orange); color:var(--orange); }
+  .add-btn:focus-visible{ outline:2px solid var(--mint); outline-offset:2px; }
+
+  /* ---------- GIVING BACK ---------- */
+  .giving{
+    background:linear-gradient(120deg, #1B3A2E, #12241C);
+    padding:4rem 0;
+  }
+  .giving .wrap{ display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+  .giving h2{ font-size:clamp(1.6rem,3.4vw,2.3rem); color:var(--paper); max-width:560px; }
+  .giving p{ color:var(--paper-dim); margin-top:0.7rem; max-width:520px; }
+
+  /* ---------- NEWSLETTER ---------- */
+  .newsletter{ background:var(--black); text-align:center; }
+  .newsletter .wrap{ max-width:620px; }
+  .newsletter h2{ font-size:clamp(2rem,4.5vw,2.8rem); color:var(--paper); }
+  .newsletter p{ color:var(--paper-dim); margin-top:1rem; }
+  .signup-form{ display:flex; gap:0.7rem; margin-top:2rem; flex-wrap:wrap; justify-content:center; }
+  .signup-form input[type="email"]{
+    flex:1; min-width:220px; background:var(--black-2); border:1px solid var(--hairline); color:var(--paper);
+    padding:0.95rem 1.1rem; font-family:var(--mono); font-size:0.85rem; border-radius:4px;
+  }
+  .signup-form input::placeholder{ color:var(--paper-dim); }
+  .signup-form input:focus-visible{ outline:2px solid var(--mint); outline-offset:2px; }
+  .form-note{ font-family:var(--mono); font-size:0.72rem; color:var(--paper-dim); margin-top:1rem; letter-spacing:0.04em; }
+  .form-success{ display:none; font-family:var(--mono); font-size:0.85rem; color:var(--mint); margin-top:1.4rem; }
+  .form-success.show{ display:block; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ border-top:1px solid var(--hairline); padding:3.5rem 0 2.2rem; background:var(--black-2); }
+  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:2.5rem; }
+  .footer-brand .logo-text{ font-size:1.15rem; }
+  .footer-brand p{ color:var(--paper-dim); font-size:0.88rem; margin-top:0.9rem; max-width:280px; }
+  .footer-col h4{ font-family:var(--mono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--mint); margin-bottom:1rem; }
+  .footer-col a{ display:block; text-decoration:none; color:var(--paper-dim); font-size:0.88rem; margin-bottom:0.65rem; transition:color 0.2s ease; }
+  .footer-col a:hover{ color:var(--paper); }
+  .footer-bottom{ margin-top:3rem; padding-top:1.6rem; border-top:1px solid var(--hairline); display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-family:var(--mono); font-size:0.72rem; color:var(--paper-dim); letter-spacing:0.03em; }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (min-width: 1000px){
+    .hero-badge{ display:block; }
+  }
+  @media (max-width: 880px){
+    nav.main-nav{
+      position:fixed; top:0; right:0; height:100vh; width:78%; max-width:320px;
+      background:var(--black-2); flex-direction:column; align-items:flex-start; justify-content:center;
+      gap:2rem; padding:2rem; transform:translateX(100%); transition:transform 0.3s ease;
+      border-left:1px solid var(--hairline);
+    }
+    nav.main-nav.open{ transform:translateX(0); }
+    .nav-toggle{ display:block; }
+    .story-grid{ grid-template-columns:1fr; gap:2.5rem; }
+    .story-art{ aspect-ratio:16/9; }
+    .roaster-grid{ grid-template-columns:1fr; gap:2.5rem; }
+    .waypoints{ grid-template-columns:repeat(2,1fr); row-gap:2.5rem; }
+    .process-line svg.rail{ display:none; }
+    .product-grid{ grid-template-columns:repeat(2,1fr); }
+    .footer-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width: 540px){
+    .product-grid{ grid-template-columns:1fr; }
+    .waypoints{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr; }
+    .hero-actions{ flex-direction:column; align-items:flex-start; }
+    .giving .wrap{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="construction-banner">🚧 This site is under construction — thanks for checking us out early!</div>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <a href="#top" class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="15" fill="#14100D" stroke="#3FE8A3" stroke-width="1.5"/>
+        <path d="M11 21c0-5.5 2.5-9 5-9s5 3.5 5 9" stroke="#EF7A35" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M11 21h10" stroke="#EF7A35" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M14 10c1-1 0-2 1-3M18 10c1-1 0-2 1-3" stroke="#EF7A35" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">KINETIC <span>COFFEE</span></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="#shop">Shop</a>
+      <a href="#story">Story</a>
+      <a href="#roaster">Our Roaster</a>
+      <a href="#giving">Giving Back</a>
+      <a href="#join">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-noise"></div>
+    <svg class="trajectory-svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <path class="trajectory-path dim" d="M -50 650 Q 300 150 650 350 T 1250 200" />
+      <path class="trajectory-path" d="M -50 700 Q 350 250 700 420 T 1250 150" />
+    </svg>
+
+    <!-- signature: rotating badge, stand-in for the real logo mark -->
+    <svg class="hero-badge" viewBox="0 0 200 200">
+      <g class="badge-spin">
+        <defs>
+          <path id="badgeCircle" d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" />
+        </defs>
+        <circle cx="100" cy="100" r="98" fill="#14100D" stroke="#2A2019" stroke-width="1"/>
+        <circle cx="100" cy="100" r="78" fill="none" stroke="#3FE8A3" stroke-width="2"/>
+        <text font-family="JetBrains Mono, monospace" font-size="10.5" letter-spacing="3" fill="#EF7A35">
+          <textPath href="#badgeCircle" startOffset="0%">KINETIC COFFEE COMPANY  •  EST. 2019  •  </textPath>
+        </text>
+      </g>
+      <circle cx="100" cy="100" r="34" fill="none" stroke="#E63A2E" stroke-width="1.5"/>
+      <text x="100" y="105" text-anchor="middle" font-family="Permanent Marker, cursive" font-size="15" fill="#FF5140">KC</text>
+    </svg>
+
+    <div class="wrap">
+      <div class="hero-content">
+        <p class="eyebrow">Veteran-Owned &amp; Operated · Small-Batch Roastery</p>
+        <h1>Momentum,<br>Roasted <em>In.</em></h1>
+        <p class="hero-sub">Kinetic Coffee Company is small-batch coffee roasted by veterans, for anyone who moves before sunrise. No shortcuts, no filler — just coffee built to keep you in motion.</p>
+        <div class="hero-actions">
+          <a href="#shop" class="btn btn-primary">Shop the Lineup</a>
+          <a href="#story" class="btn btn-ghost">Read Our Story</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION STRIP -->
+  <div class="strip">
+    <div class="strip-track">
+      <span>Est. 2019</span>
+      <span>Veteran-Owned &amp; Operated</span>
+      <span>2.2% of Every Bag to Mission 22</span>
+      <span>Roasted to Order — Never Sits on a Shelf</span>
+      <span>Est. 2019</span>
+      <span>Veteran-Owned &amp; Operated</span>
+      <span>2.2% of Every Bag to Mission 22</span>
+      <span>Roasted to Order — Never Sits on a Shelf</span>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <section class="story" id="story">
+    <div class="wrap">
+      <div class="story-grid">
+        <div class="story-art reveal">
+          <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="500" fill="#1E1712"/>
+            <circle cx="200" cy="230" r="120" fill="none" stroke="#2A2019" stroke-width="1.5"/>
+            <circle cx="200" cy="230" r="85" fill="none" stroke="#3FE8A3" stroke-width="1.5" opacity="0.7"/>
+            <path d="M200 145 A85 85 0 0 1 285 230" fill="none" stroke="#EF7A35" stroke-width="3" stroke-linecap="round"/>
+            <rect x="150" y="330" width="100" height="70" rx="6" fill="#2A2019" stroke="#E63A2E" stroke-width="1.5"/>
+            <path d="M160 330 v-15 a40 40 0 0 1 80 0 v15" fill="none" stroke="#E63A2E" stroke-width="1.5"/>
+            <text x="200" y="372" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#FF9450" letter-spacing="1">BATCH №014</text>
+            <line x1="40" y1="450" x2="360" y2="450" stroke="#2A2019" stroke-width="1"/>
+            <text x="200" y="475" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#C2B9A6" letter-spacing="2">ROASTED TO ORDER · SHIPPED</text>
+          </svg>
+        </div>
+        <div class="story-copy reveal">
+          <p class="eyebrow">Our Story</p>
+          <h2 style="margin-top:0.6rem;">Built On Discipline, Poured With Purpose</h2>
+          <p>Kinetic Coffee Company was founded by a veteran who ran on coffee through 0400 briefings, long convoys, and deployments where sleep was a luxury nobody could afford.</p>
+          <p>When he came home, he set out to build the coffee he wished he'd had — sourced deliberately, roasted with precision, and evaluated batch by batch, the same way he'd been trained to check and recheck everything that mattered.</p>
+          <p>Every bag is roasted in small batches by our partners at Wagon Coffee Roasters in Denver, then packed under our name and shipped out ready to move. It's not about nostalgia for the service — it's about bringing that same discipline to something as ordinary, and as essential, as your morning cup.</p>
+          <blockquote class="pull-quote">
+            "We don't roast coffee to relax. We roast it to move."
+            <cite>— Founder, Kinetic Coffee Co.</cite>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROASTER -->
+  <section class="roaster" id="roaster">
+    <div class="wrap">
+      <div class="roaster-grid">
+        <div class="roaster-copy reveal">
+          <p class="eyebrow">Our Roasting Partner</p>
+          <h2 style="margin-top:0.6rem;">Roasted By Wagon Coffee</h2>
+          <p>Every bag of Kinetic Coffee is roasted by Wagon Coffee Roasters, a women-owned coffee roastery in Denver founded by Tami Canaday in 2020. Wagon employs and supports women in recovery from addiction, offering real jobs, encouragement, and a second chance through coffee.</p>
+          <p>Their beans are roasted on an all-electric, zero-emission roaster that cuts the carbon footprint of every batch by roughly 90% compared to a traditional gas roaster. Green coffee is bought through trusted import partners at above fair-trade prices, so the people growing it get paid fairly for the work.</p>
+          <p>We pack every batch into our own bags, but the craft behind what's inside belongs to Wagon.</p>
+          <a href="https://wagoncoffeeroasters.com/" class="btn btn-ghost" style="margin-top:1.2rem;">Visit Wagon Coffee Roasters</a>
+        </div>
+        <div class="roaster-facts reveal">
+          <div class="fact-card">
+            <span class="step-no">WOMEN-OWNED &amp; OPERATED</span>
+            <p>Founded and run by women, employing women in recovery across every stage of the roasting process.</p>
+          </div>
+          <div class="fact-card">
+            <span class="step-no">100% ELECTRIC ROASTING</span>
+            <p>Roasted on a Bellwether roaster — zero emissions, ~90% lower carbon footprint per batch.</p>
+          </div>
+          <div class="fact-card">
+            <span class="step-no">ABOVE FAIR-TRADE SOURCING</span>
+            <p>Green coffee bought through trusted import partners, paying producers above fair-trade prices.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">The Process</p>
+        <h2>From Farm to Field-Ready</h2>
+      </div>
+      <div class="process-line" id="processLine">
+        <svg class="rail" viewBox="0 0 1000 6" preserveAspectRatio="none">
+          <path class="rail-path" d="M0 3 H1000" />
+          <path class="rail-fill" id="railFill" d="M0 3 H1000" />
+        </svg>
+        <div class="waypoints">
+          <div class="waypoint">
+            <div class="waypoint-dot"></div>
+            <span class="step-no">01 / SOURCED</span>
+            <h3>Sourced</h3>
+            <p>Green beans bought through trusted import partners at above fair-trade prices, so the people growing it get paid fairly for the work.</p>
+          </div>
+          <div class="waypoint">
+            <div class="waypoint-dot"></div>
+            <span class="step-no">02 / ROASTED TO ORDER</span>
+            <h3>Roasted To Order</h3>
+            <p>Nothing sits on a shelf. Your beans are roasted by our partners at Wagon Coffee Roasters in Denver only once you place your order, on an all-electric roaster.</p>
+          </div>
+          <div class="waypoint">
+            <div class="waypoint-dot"></div>
+            <span class="step-no">03 / PACKED</span>
+            <h3>Packed</h3>
+            <p>Straight from the roaster into our own bags, sealed while it's still at its freshest — no warehouse, no sitting around.</p>
+          </div>
+          <div class="waypoint">
+            <div class="waypoint-dot"></div>
+            <span class="step-no">04 / SHIPPED</span>
+            <h3>Shipped</h3>
+            <p>Out the door fast, so what arrives at your place is some of the freshest coffee you can buy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="shop">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">The Lineup</p>
+        <h2>Shop Coffee</h2>
+      </div>
+      <div class="product-grid">
+
+        <div class="product-card reveal">
+          <div class="bag-art">
+            <svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#2A2019"/>
+              <path d="M55 40 h90 l10 130 a10 10 0 0 1-10 10 h-90 a10 10 0 0 1-10-10 z" fill="#332619" stroke="#3FE8A3" stroke-width="1.5"/>
+              <rect x="75" y="30" width="50" height="20" rx="3" fill="#1E1712" stroke="#3FE8A3" stroke-width="1.5"/>
+              <circle cx="100" cy="120" r="26" fill="none" stroke="#3FE8A3" stroke-width="1.5"/>
+              <text x="100" y="124" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#3FE8A3">WH</text>
+            </svg>
+          </div>
+          <h3>White Knuckle</h3>
+          <p class="roast-tag">Brazil · White Roast · Highest Caffeine</p>
+          <p class="notes">Deceptively mellow — a hint of peanut butter and toasted grain, almost no bitterness. Don't let the light color fool you: less time on heat means more caffeine left in the bean than anything else in the lineup.</p>
+          <div class="gauge">
+            <div class="gauge-label"><span>Caffeine</span><span>10/10</span></div>
+            <div class="gauge-bar"><div class="gauge-fill" style="width:100%;"></div></div>
+          </div>
+          <div class="price-row">
+            <span class="price">$18.00</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="product-card reveal">
+          <div class="bag-art">
+            <svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#2A2019"/>
+              <path d="M55 40 h90 l10 130 a10 10 0 0 1-10 10 h-90 a10 10 0 0 1-10-10 z" fill="#3A2A18" stroke="#EF7A35" stroke-width="1.5"/>
+              <rect x="75" y="30" width="50" height="20" rx="3" fill="#1E1712" stroke="#EF7A35" stroke-width="1.5"/>
+              <circle cx="100" cy="120" r="26" fill="none" stroke="#EF7A35" stroke-width="1.5"/>
+              <text x="100" y="124" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#EF7A35">MD</text>
+            </svg>
+          </div>
+          <h3>Standard Issue</h3>
+          <p class="roast-tag">Peru · Medium Roast</p>
+          <p class="notes">The daily driver. Toasted nuts, milk chocolate, and a balanced body — the one you keep in rotation year-round.</p>
+          <div class="gauge">
+            <div class="gauge-label"><span>Intensity</span><span>5/10</span></div>
+            <div class="gauge-bar"><div class="gauge-fill" style="width:50%;"></div></div>
+          </div>
+          <div class="price-row">
+            <span class="price">$18.00</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="product-card reveal">
+          <div class="bag-art">
+            <svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#2A2019"/>
+              <path d="M55 40 h90 l10 130 a10 10 0 0 1-10 10 h-90 a10 10 0 0 1-10-10 z" fill="#241813" stroke="#E63A2E" stroke-width="1.5"/>
+              <rect x="75" y="30" width="50" height="20" rx="3" fill="#1E1712" stroke="#E63A2E" stroke-width="1.5"/>
+              <circle cx="100" cy="120" r="26" fill="none" stroke="#E63A2E" stroke-width="1.5"/>
+              <text x="100" y="124" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#FF5140">DK</text>
+            </svg>
+          </div>
+          <h3>Rally Point</h3>
+          <p class="roast-tag">Ethiopia · Medium Roast</p>
+          <p class="notes">Bright and floral, with notes of berry and stone fruit. The one that gets a "what is this?" from whoever you share it with.</p>
+          <div class="gauge">
+            <div class="gauge-label"><span>Intensity</span><span>4/10</span></div>
+            <div class="gauge-bar"><div class="gauge-fill" style="width:40%;"></div></div>
+          </div>
+          <div class="price-row">
+            <span class="price">$19.00</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="product-card reveal">
+          <div class="bag-art">
+            <svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#2A2019"/>
+              <path d="M55 40 h90 l10 130 a10 10 0 0 1-10 10 h-90 a10 10 0 0 1-10-10 z" fill="#2E2418" stroke="#3FE8A3" stroke-width="1.5"/>
+              <rect x="75" y="30" width="50" height="20" rx="3" fill="#1E1712" stroke="#3FE8A3" stroke-width="1.5"/>
+              <circle cx="100" cy="120" r="26" fill="none" stroke="#3FE8A3" stroke-width="1.5"/>
+              <text x="100" y="124" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#3FE8A3">CO</text>
+            </svg>
+          </div>
+          <h3>Full Deployment</h3>
+          <p class="roast-tag">Colombia · Medium Roast</p>
+          <p class="notes">Caramel, toasted nuts, plum, and a touch of cocoa nib. The boldest of the lineup without tipping into bitter.</p>
+          <div class="gauge">
+            <div class="gauge-label"><span>Intensity</span><span>6/10</span></div>
+            <div class="gauge-bar"><div class="gauge-fill" style="width:60%;"></div></div>
+          </div>
+          <div class="price-row">
+            <span class="price">$19.00</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GIVING BACK -->
+  <section class="giving" id="giving">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow" style="color:#3FE8A3;">Giving Back</p>
+        <h2>2.2% of every bag goes to Mission 22.</h2>
+        <p>The number isn't random. It's tied to the reason Mission 22 exists — the estimated number of veterans lost to suicide every day. Every bag you buy puts real dollars behind their work on suicide prevention and mental health support for veterans and their families.</p>
+      </div>
+      <a href="https://www.mission22.com" class="btn btn-ghost reveal">Learn About Mission 22</a>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter" id="join">
+    <div class="wrap reveal">
+      <p class="eyebrow">Stay Connected</p>
+      <h2 style="margin-top:0.6rem;">Join the Ranks</h2>
+      <p>Get new roast drops, restock alerts, and stories from the roastery. No spam, no filler — same as our coffee.</p>
+      <form class="signup-form" id="signupForm">
+        <input type="email" required placeholder="you@email.com" aria-label="Email address">
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+      <p class="form-note">No spam. Unsubscribe anytime.</p>
+      <p class="form-success" id="formSuccess">✓ You're on the list. Welcome to the ranks.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text">KINETIC <span style="color:#EF7A35;">COFFEE CO.</span></span>
+        <p>Small-batch coffee, roasted with discipline. Veteran-owned and operated — 2.2% of every bag supports Mission 22.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="#shop">White Knuckle</a>
+        <a href="#shop">Standard Issue</a>
+        <a href="#shop">Rally Point</a>
+        <a href="#shop">Full Deployment</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#story">Our Story</a>
+        <a href="#roaster">Our Roaster</a>
+        <a href="#giving">Giving Back</a>
+        <a href="#join">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Coordinates</h4>
+        <a href="mailto:hello@kineticcoffeeco.com">hello@kineticcoffeeco.com</a>
+        <a href="#">Colorado, USA</a>
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="year"></span>
+      <span>Veteran-Owned &amp; Operated · All Systems Go</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header solid on scroll
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('solid', window.scrollY > 40);
+  }, { passive:true });
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const mainNav = document.getElementById('mainNav');
+  navToggle.addEventListener('click', () => {
+    const open = mainNav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mainNav.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.15 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Process line draw
+  const processLine = document.getElementById('processLine');
+  const lineObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        processLine.classList.add('in-view');
+        lineObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.3 });
+  lineObserver.observe(processLine);
+
+  // Newsletter fake-submit
+  const form = document.getElementById('signupForm');
+  const success = document.getElementById('formSuccess');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.style.display = 'none';
+    success.classList.add('show');
+  });
+
+  // Footer year
+  document.getElementById('year').textContent = '© ' + new Date().getFullYear() + ' Kinetic Coffee Company.';
+</script>
+
+</body>
+</html>
