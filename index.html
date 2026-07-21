@@ -105,7 +105,7 @@
   header.solid{ background:rgba(20,16,13,0.96); border-bottom-color:var(--hairline); backdrop-filter:blur(6px); }
   header .wrap{ display:flex; align-items:center; justify-content:space-between; }
   .logo{ display:flex; align-items:center; gap:0.55rem; text-decoration:none; }
-  .logo-mark{ width:30px; height:30px; flex-shrink:0; }
+  .logo-mark{ width:34px; height:34px; flex-shrink:0; object-fit:cover; border-radius:50%; }
   .logo-text{ font-family:var(--heading); font-weight:800; font-size:1.1rem; letter-spacing:0.01em; color:var(--red); text-transform:uppercase; }
   .logo-text span{ color:var(--orange); }
   nav.main-nav{ display:flex; align-items:center; gap:2rem; }
@@ -324,12 +324,7 @@
 <header id="siteHeader">
   <div class="wrap">
     <a href="#top" class="logo">
-      <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
-        <circle cx="16" cy="16" r="15" fill="#14100D" stroke="#3FE8A3" stroke-width="1.5"/>
-        <path d="M11 21c0-5.5 2.5-9 5-9s5 3.5 5 9" stroke="#EF7A35" stroke-width="1.6" stroke-linecap="round"/>
-        <path d="M11 21h10" stroke="#EF7A35" stroke-width="1.6" stroke-linecap="round"/>
-        <path d="M14 10c1-1 0-2 1-3M18 10c1-1 0-2 1-3" stroke="#EF7A35" stroke-width="1.3" stroke-linecap="round"/>
-      </svg>
+      <img class="logo-mark" src="kc-brown-circle-logo-brown-circle-full-color-cmyk-900px-w-300ppi.jpg" alt="Kinetic Coffee Company logo" style="border-radius:50%;">
       <span class="logo-text">KINETIC <span>COFFEE</span></span>
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
@@ -353,21 +348,10 @@
       <path class="trajectory-path" d="M -50 700 Q 350 250 700 420 T 1250 150" />
     </svg>
 
-    <!-- signature: rotating badge, stand-in for the real logo mark -->
-    <svg class="hero-badge" viewBox="0 0 200 200">
-      <g class="badge-spin">
-        <defs>
-          <path id="badgeCircle" d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" />
-        </defs>
-        <circle cx="100" cy="100" r="98" fill="#14100D" stroke="#2A2019" stroke-width="1"/>
-        <circle cx="100" cy="100" r="78" fill="none" stroke="#3FE8A3" stroke-width="2"/>
-        <text font-family="JetBrains Mono, monospace" font-size="10.5" letter-spacing="3" fill="#EF7A35">
-          <textPath href="#badgeCircle" startOffset="0%">KINETIC COFFEE COMPANY  •  EST. 2019  •  </textPath>
-        </text>
-      </g>
-      <circle cx="100" cy="100" r="34" fill="none" stroke="#E63A2E" stroke-width="1.5"/>
-      <text x="100" y="105" text-anchor="middle" font-family="Permanent Marker, cursive" font-size="15" fill="#FF5140">KC</text>
-    </svg>
+    <!-- signature: real logo, gently rotating -->
+    <div class="hero-badge">
+      <img src="kc-brown-circle-logo-brown-circle-full-color-cmyk-900px-w-300ppi.jpg" alt="Kinetic Coffee Company logo" class="badge-spin" style="width:100%; height:100%; border-radius:50%;">
+    </div>
 
     <div class="wrap">
       <div class="hero-content">
@@ -385,11 +369,11 @@
   <!-- MISSION STRIP -->
   <div class="strip">
     <div class="strip-track">
-      <span>Est. 2019</span>
+      <span>Est. 2024</span>
       <span>Veteran-Owned &amp; Operated</span>
       <span>2.2% of Every Bag to Mission 22</span>
       <span>Roasted to Order — Never Sits on a Shelf</span>
-      <span>Est. 2019</span>
+      <span>Est. 2024</span>
       <span>Veteran-Owned &amp; Operated</span>
       <span>2.2% of Every Bag to Mission 22</span>
       <span>Roasted to Order — Never Sits on a Shelf</span>
@@ -634,6 +618,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
+        <img src="kc-brown-circle-logo-brown-circle-full-color-cmyk-900px-w-300ppi.jpg" alt="Kinetic Coffee Company logo" style="width:56px; height:56px; border-radius:50%; margin-bottom:0.9rem;">
         <span class="logo-text">KINETIC <span style="color:#EF7A35;">COFFEE CO.</span></span>
         <p>Small-batch coffee, roasted with discipline. Veteran-owned and operated — 2.2% of every bag supports Mission 22.</p>
       </div>
