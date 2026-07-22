@@ -208,23 +208,61 @@
   .fact-card .step-no{ font-family:var(--mono); font-size:0.72rem; color:var(--mint); letter-spacing:0.08em; }
   .fact-card p{ color:var(--paper-dim); font-size:0.9rem; margin-top:0.6rem; }
 
-  /* ---------- PROCESS ---------- */
+  /* ---------- PROCESS (interactive star) ---------- */
   .process{ background:var(--black-2); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); }
-  .process-line{ position:relative; margin-top:3rem; }
-  .process-line svg.rail{ position:absolute; top:26px; left:0; width:100%; height:6px; z-index:0; }
-  .rail-path{ stroke:var(--hairline); stroke-width:2; fill:none; }
-  .rail-fill{ stroke:var(--mint); stroke-width:2; fill:none; stroke-dasharray:1000; stroke-dashoffset:1000; transition:stroke-dashoffset 1.6s cubic-bezier(.3,.9,.3,1); }
-  .process-line.in-view .rail-fill{ stroke-dashoffset:0; }
-  .waypoints{ position:relative; z-index:1; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
-  .waypoint{ opacity:0; transform:translateY(14px); transition:opacity 0.6s ease, transform 0.6s ease; }
-  .process-line.in-view .waypoint{ opacity:1; transform:translateY(0); }
-  .waypoint:nth-child(2){ transition-delay:0.15s; }
-  .waypoint:nth-child(3){ transition-delay:0.3s; }
-  .waypoint:nth-child(4){ transition-delay:0.45s; }
-  .waypoint-dot{ width:14px; height:14px; border-radius:50%; background:var(--black-2); border:2px solid var(--mint); margin-bottom:1.1rem; }
-  .waypoint .step-no{ font-family:var(--mono); font-size:0.72rem; color:var(--mint); letter-spacing:0.1em; }
-  .waypoint h3{ font-size:1.15rem; margin-top:0.4rem; color:var(--paper); }
-  .waypoint p{ color:var(--paper-dim); font-size:0.92rem; margin-top:0.6rem; }
+  .process-star{
+    position:relative; width:100%; max-width:560px; aspect-ratio:1/1;
+    margin:4.5rem auto 2rem;
+  }
+  .star-svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .star-outline{ fill:none; stroke:var(--hairline); stroke-width:0.6; transition:stroke 0.6s ease, opacity 0.6s ease; opacity:0.6; }
+  .process-star.in-view .star-outline{ stroke:var(--mint); opacity:0.55; }
+
+  .star-node{
+    position:absolute; transform:translate(-50%,-50%);
+    background:none; border:none; padding:0.4rem; margin:-0.4rem;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    z-index:2; -webkit-tap-highlight-color:transparent;
+  }
+  .star-dot{
+    width:13px; height:13px; border-radius:50%; background:var(--black-2);
+    border:2px solid var(--mint); flex-shrink:0; display:block;
+    transition:background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .star-node:hover .star-dot, .star-node:focus-visible .star-dot{ border-color:var(--orange); }
+  .star-node.active .star-dot{
+    background:var(--mint); transform:scale(1.25);
+    box-shadow:0 0 0 7px rgba(63,232,163,0.16);
+  }
+  .star-node:focus-visible{ outline:none; }
+  .star-node:focus-visible .star-dot{ box-shadow:0 0 0 4px rgba(239,122,53,0.35); }
+
+  .star-label{
+    position:absolute; font-family:var(--mono); font-size:0.66rem; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--paper-dim); white-space:nowrap;
+    transition:color 0.25s ease; pointer-events:none;
+  }
+  .star-node.active .star-label, .star-node:hover .star-label{ color:var(--paper); }
+
+  .star-node--top .star-label{ bottom:100%; left:50%; margin-bottom:10px; transform:translateX(-50%); }
+  .star-node--right-upper .star-label{ left:100%; top:50%; margin-left:10px; transform:translateY(-50%); }
+  .star-node--right-lower .star-label{ left:100%; top:50%; margin-left:10px; transform:translateY(-50%); }
+  .star-node--left-lower .star-label{ right:100%; top:50%; margin-right:10px; transform:translateY(-50%); text-align:right; }
+  .star-node--left-upper .star-label{ right:100%; top:50%; margin-right:10px; transform:translateY(-50%); text-align:right; }
+
+  .star-center{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:42%; max-width:220px; min-height:34%;
+    background:var(--black); border:1px solid var(--hairline); border-radius:14px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:1rem 0.9rem; pointer-events:none;
+    transition:border-color 0.3s ease;
+  }
+  .process-star.in-view .star-center{ border-color:rgba(63,232,163,0.35); }
+  .star-center-step{ font-family:var(--mono); font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--mint); }
+  .star-center h3{ font-size:1rem; color:var(--paper); margin-top:0.4rem; }
+  .star-center p{ color:var(--paper-dim); font-size:0.72rem; margin-top:0.55rem; line-height:1.5; }
+  .star-hint{ text-align:center; font-family:var(--mono); font-size:0.68rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--paper-dim); margin-top:1rem; }
 
   /* ---------- PRODUCTS ---------- */
   .products{ background:var(--black); }
@@ -291,6 +329,18 @@
   @media (min-width: 1000px){
     .hero-badge{ display:block; }
   }
+  @media (max-width: 640px){
+    .process-star{ max-width:340px; margin:4rem auto 1.5rem; }
+    .star-label{ font-size:0.58rem; }
+    .star-node--top .star-label{ margin-bottom:8px; }
+    .star-node--right-upper .star-label,
+    .star-node--right-lower .star-label{ margin-left:7px; }
+    .star-node--left-lower .star-label,
+    .star-node--left-upper .star-label{ margin-right:7px; }
+    .star-center{ width:46%; padding:0.8rem 0.7rem; }
+    .star-center h3{ font-size:0.86rem; }
+    .star-center p{ font-size:0.66rem; line-height:1.4; }
+  }
   @media (max-width: 880px){
     nav.main-nav{
       position:fixed; top:0; right:0; height:100vh; width:78%; max-width:320px;
@@ -303,20 +353,18 @@
     .story-grid{ grid-template-columns:1fr; gap:2.5rem; }
     .story-art{ aspect-ratio:16/9; }
     .roaster-grid{ grid-template-columns:1fr; gap:2.5rem; }
-    .waypoints{ grid-template-columns:repeat(2,1fr); row-gap:2.5rem; }
-    .process-line svg.rail{ display:none; }
     .product-grid{ grid-template-columns:repeat(2,1fr); }
     .footer-grid{ grid-template-columns:1fr 1fr; }
   }
   @media (max-width: 540px){
     .product-grid{ grid-template-columns:1fr; }
-    .waypoints{ grid-template-columns:1fr; }
     .footer-grid{ grid-template-columns:1fr; }
     .hero-actions{ flex-direction:column; align-items:flex-start; }
     .giving .wrap{ flex-direction:column; align-items:flex-start; }
   }
 </style>
 </head>
+
 <body>
 
 <div class="construction-banner">🚧 This site is under construction — thanks for checking us out early!</div>
@@ -372,7 +420,7 @@
     <div class="strip-track">
       <span>Est. 2024</span>
       <span>Veteran-Owned &amp; Operated</span>
-      <span>2.2% of Every Oder to Mission 22</span>
+      <span>2.2% of Every Order to Mission 22</span>
       <span>Roasted to Order — Never Sits on a Shelf</span>
       <span>Est. 2024</span>
       <span>Veteran-Owned &amp; Operated</span>
@@ -448,44 +496,59 @@
         <p class="eyebrow">The Process</p>
         <h2>From Farm to Field-Ready</h2>
       </div>
-      <div class="process-line" id="processLine">
-        <svg class="rail" viewBox="0 0 1000 6" preserveAspectRatio="none">
-          <path class="rail-path" d="M0 3 H1000" />
-          <path class="rail-fill" id="railFill" d="M0 3 H1000" />
+
+      <div class="process-star reveal" id="processStar">
+        <svg class="star-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+          <path class="star-outline" d="M50,8 L74.69,83.98 L10.05,37.02 L89.95,37.02 L25.31,83.98 Z" />
         </svg>
-        <div class="waypoints">
-          <div class="waypoint">
-            <div class="waypoint-dot"></div>
-            <span class="step-no">01 / SOURCED</span>
-            <h3>Sourced</h3>
-            <p>Green beans bought through trusted import partners.</p>
-          </div>
-          <div class="waypoint">
-            <div class="waypoint-dot"></div>
-            <span class="step-no">02 / ROASTED TO ORDER</span>
-            <h3>Roasted To Order</h3>
-            <p>Nothing sits on a shelf. Your beans are roasted by our partners at Wagon Coffee Roasters in Denver only once you place your order, on an all-electric roaster.</p>
-          </div>
-           <div class="waypoint">
-            <div class="waypoint-dot"></div>
-            <span class="step-no">03 / CUPPED</span>
-            <h3>Cupped</h3>
-            <p>Wagon only sells beans that score 85 or higher on the specialty coffee scale. Every lot is cupped and evaluated before it's cleared to roast — anything under spec doesn't make the cut.</p>
-          </div>   
-          <div class="waypoint">
-            <div class="waypoint-dot"></div>
-            <span class="step-no">03 / PACKED</span>
-            <h3>Packed</h3>
-            <p>Straight from the roaster into our own bags, sealed while it's still at its freshest — no warehouse, no sitting around.</p>
-          </div>
-          <div class="waypoint">
-            <div class="waypoint-dot"></div>
-            <span class="step-no">04 / SHIPPED</span>
-            <h3>Shipped</h3>
-            <p>Out the door fast, so what arrives at your place is some of the freshest coffee you can buy.</p>
-          </div>
+
+        <button type="button" class="star-node star-node--top active" style="left:50%; top:8%;"
+          data-step="01 / SOURCED" data-title="Sourced"
+          data-desc="Green beans bought through trusted import partners."
+          aria-label="Step 1: Sourced">
+          <span class="star-dot"></span>
+          <span class="star-label">Sourced</span>
+        </button>
+
+        <button type="button" class="star-node star-node--right-upper" style="left:89.95%; top:37.02%;"
+          data-step="02 / ROASTED" data-title="Roasted To Order"
+          data-desc="Nothing sits on a shelf. Your beans are roasted by our partners at Wagon Coffee Roasters in Denver only once you place your order, on an all-electric roaster."
+          aria-label="Step 2: Roasted To Order">
+          <span class="star-dot"></span>
+          <span class="star-label">Roasted</span>
+        </button>
+
+        <button type="button" class="star-node star-node--right-lower" style="left:74.69%; top:83.98%;"
+          data-step="03 / CUPPED" data-title="Cupped"
+          data-desc="Wagon only sells beans that score 85 or higher on the specialty coffee scale. Every lot is cupped and evaluated before it's cleared to roast — anything under spec doesn't make the cut."
+          aria-label="Step 3: Cupped">
+          <span class="star-dot"></span>
+          <span class="star-label">Cupped</span>
+        </button>
+
+        <button type="button" class="star-node star-node--left-lower" style="left:25.31%; top:83.98%;"
+          data-step="04 / PACKED" data-title="Packed"
+          data-desc="Straight from the roaster into our own bags, sealed while it's still at its freshest — no warehouse, no sitting around."
+          aria-label="Step 4: Packed">
+          <span class="star-dot"></span>
+          <span class="star-label">Packed</span>
+        </button>
+
+        <button type="button" class="star-node star-node--left-upper" style="left:10.05%; top:37.02%;"
+          data-step="05 / SHIPPED" data-title="Shipped"
+          data-desc="Out the door fast, so what arrives at your place is some of the freshest coffee you can buy."
+          aria-label="Step 5: Shipped">
+          <span class="star-dot"></span>
+          <span class="star-label">Shipped</span>
+        </button>
+
+        <div class="star-center" id="starCenter" aria-live="polite">
+          <span class="star-center-step" id="starCenterStep">01 / SOURCED</span>
+          <h3 id="starCenterTitle">Sourced</h3>
+          <p id="starCenterDesc">Green beans bought through trusted import partners.</p>
         </div>
       </div>
+      <p class="star-hint">Hover or tap a point to see each step</p>
     </div>
   </section>
 
@@ -762,17 +825,40 @@
   }, { threshold:0.15 });
   revealEls.forEach(el => revealObserver.observe(el));
 
-  // Process line draw
-  const processLine = document.getElementById('processLine');
-  const lineObserver = new IntersectionObserver((entries) => {
+  // Process star: fade the outline in on scroll
+  const processStar = document.getElementById('processStar');
+  const starObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        processLine.classList.add('in-view');
-        lineObserver.unobserve(entry.target);
+        processStar.classList.add('in-view');
+        starObserver.unobserve(entry.target);
       }
     });
   }, { threshold:0.3 });
-  lineObserver.observe(processLine);
+  starObserver.observe(processStar);
+
+  // Process star: interactive nodes (hover on desktop, tap on mobile, focusable via keyboard)
+  const starNodes = document.querySelectorAll('.star-node');
+  const starCenterStep = document.getElementById('starCenterStep');
+  const starCenterTitle = document.getElementById('starCenterTitle');
+  const starCenterDesc = document.getElementById('starCenterDesc');
+  const canHover = window.matchMedia('(hover: hover)').matches;
+
+  function setActiveStarNode(node) {
+    starNodes.forEach(n => n.classList.remove('active'));
+    node.classList.add('active');
+    starCenterStep.textContent = node.dataset.step;
+    starCenterTitle.textContent = node.dataset.title;
+    starCenterDesc.textContent = node.dataset.desc;
+  }
+
+  starNodes.forEach(node => {
+    node.addEventListener('click', () => setActiveStarNode(node));
+    node.addEventListener('focus', () => setActiveStarNode(node));
+    if (canHover) {
+      node.addEventListener('mouseenter', () => setActiveStarNode(node));
+    }
+  });
 
   // Newsletter fake-submit
   const form = document.getElementById('signupForm');
